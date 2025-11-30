@@ -1,0 +1,25 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+  <!-- Outer Circle -->
+  <circle cx="100" cy="100" r="95" fill="none" stroke="#9CAF5C" stroke-width="8"/>
+  
+  <!-- Boat/Ship Icon -->
+  <g transform="translate(100, 60)">
+    <!-- Ship hull -->
+    <path d="M -30 0 L -20 15 L 20 15 L 30 0 Z" fill="#9CAF5C"/>
+    <!-- Ship cabin/deck -->
+    <rect x="-18" y="-8" width="36" height="10" fill="#9CAF5C"/>
+    <!-- Camel head on ship -->
+    <ellipse cx="0" cy="-15" rx="8" ry="12" fill="#9CAF5C"/>
+    <circle cx="2" cy="-22" r="3" fill="#9CAF5C"/>
+  </g>
+  
+  <!-- Main Text - QABYO TIRE -->
+  <text x="100" y="135" font-family="Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="#9CAF5C" letter-spacing="1">
+    QABYO TIRE
+  </text>
+  
+  <!-- Subtext - TRADING COMPANY -->
+  <text x="100" y="160" font-family="Arial, sans-serif" font-size="12" font-weight="500" text-anchor="middle" fill="#9CAF5C" letter-spacing="0.5">
+    TRADING COMPANY
+  </text>
+</svg>
