@@ -8,7 +8,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
 const navigation = [
   { name: "Home", href: "#hero" },
-  { name: "Tracker", href: "#tracker" },
+  { name: "Livestock", href: "#livestock" },
   { name: "About", href: "#about" },
   { name: "Services", href: "#services" },
   { name: "Gallery", href: "#gallery" },
