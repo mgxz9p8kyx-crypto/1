@@ -11,7 +11,7 @@ export function Hero() {
           <div className="flex flex-col gap-8">
             <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm font-medium text-primary w-fit">
               <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
-              Trusted Since 2015
+              Serving the Gulf Since 2015
             </div>
 
             <div className="space-y-4">
