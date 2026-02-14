@@ -1,135 +1,87 @@
 "use client"
 
 import useSWR from "swr"
-import { Card } from "@/components/ui/card"
-import { Zap } from "lucide-react"
 import React from "react"
 
-type Stats = {
-  cattle: number
-  goats: number
-  sheep: number
-  camels: number
-}
+type Stats = { cattle: number; goats: number; sheep: number; camels: number }
 
-const fetcher = (url: string) =>
-  fetch(url).then((res) => {
-    if (!res.ok) throw new Error("Failed to fetch stats")
-    return res.json()
-  })
+const fetcher = (url: string) => fetch(url).then((r) => { if (!r.ok) throw new Error(); return r.json() })
 
 function AnimatedNumber({ value, delay = 0 }: { value: number; delay?: number }) {
   const [count, setCount] = React.useState(0)
-
   React.useEffect(() => {
-    const timer = setTimeout(() => {
-      const duration = 2000
-      const start = Date.now()
-
-      const animate = () => {
-        const elapsed = Date.now() - start
-        const progress = Math.min(elapsed / duration, 1)
-        setCount(Math.floor(value * progress))
-
-        if (progress < 1) {
-          requestAnimationFrame(animate)
-        } else {
-          setCount(value)
-        }
+    const t = setTimeout(() => {
+      const dur = 2000, start = Date.now()
+      const tick = () => {
+        const p = Math.min((Date.now() - start) / dur, 1)
+        setCount(Math.floor(value * p))
+        if (p < 1) requestAnimationFrame(tick); else setCount(value)
       }
-
-      requestAnimationFrame(animate)
+      requestAnimationFrame(tick)
     }, delay)
-
-    return () => clearTimeout(timer)
+    return () => clearTimeout(t)
   }, [value, delay])
-
-  return count.toLocaleString()
+  return <>{count.toLocaleString()}</>
 }
 
+const livestock = [
+  { key: "sheep" as const, label: "Sheep", delay: 0, fallback: 181075 },
+  { key: "goats" as const, label: "Goats", delay: 150, fallback: 120525 },
+  { key: "cattle" as const, label: "Cattle", delay: 300, fallback: 68850 },
+  { key: "camels" as const, label: "Camels", delay: 450, fallback: 21725 },
+]
+
 export function Tracker() {
-  const { data, isLoading } = useSWR<Stats>("/api/stats", fetcher, {
-    refreshInterval: 15000,
-  })
-
-  const stats = [
-    { label: "Sheep", value: data?.sheep || 181075, icon: "🐑", order: 1, delay: 0 },
-    { label: "Goats", value: data?.goats || 120525, icon: "🐐", order: 2, delay: 200 },
-    { label: "Cattle", value: data?.cattle || 68850, icon: "🐄", order: 3, delay: 400 },
-    { label: "Camels", value: data?.camels || 21725, icon: "🐪", order: 4, delay: 600 },
-  ]
-
-  // Sort to put sheep first (most prominent)
-  const sortedStats = stats.sort((a, b) => a.order - b.order)
+  const { data, isLoading } = useSWR<Stats>("/api/stats", fetcher, { refreshInterval: 15000 })
 
   return (
-    <section id="tracker" className="py-32 bg-gradient-to-b from-emerald-50 to-white">
+    <section id="tracker" className="py-20 md:py-28 bg-muted/50">
       <div className="container mx-auto px-4 md:px-6">
-        {/* Section Header */}
-        <div className="mb-20 flex flex-col items-center gap-6 text-center">
-          <div className="flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-emerald-700">
-            <Zap className="h-5 w-5" />
-            Real-Time Tracking
-          </div>
-          <h2 className="text-5xl md:text-6xl font-bold tracking-tight text-slate-900">
-            Livestock Exported & Delivered
+        <div className="text-center mb-16 space-y-4">
+          <p className="text-sm font-semibold uppercase tracking-widest text-primary">Live Export Data</p>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground text-balance">
+            Total Livestock Exported & Delivered
           </h2>
-          <p className="text-lg text-slate-700 max-w-3xl leading-relaxed">
-            2015–2025: A decade of consistent excellence in premium livestock exports. Real-time data of{" "}
-            <strong>Qabyo-Tire Trading Company&apos;s</strong> best-grade animals delivered across Gulf markets.
+          <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            Real-time tracking of our livestock exports demonstrating our consistent delivery across Gulf markets since 2015.
           </p>
-          <div className="flex items-center gap-2 text-sm font-semibold text-emerald-700 bg-white px-5 py-2.5 rounded-full border-2 border-emerald-200 shadow-sm">
-            <div className="h-3 w-3 rounded-full bg-emerald-500 animate-pulse" />
-            Live System Status
+          <div className="inline-flex items-center gap-2 text-sm font-medium text-primary bg-primary/5 border border-primary/15 rounded-full px-4 py-2">
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary/60" />
+              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-primary" />
+            </span>
+            System Online
           </div>
         </div>
 
-        {/* Stats Grid - Premium Minimalist Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-          {sortedStats.map((stat) => (
-            <Card
-              key={stat.label}
-              className="border-2 border-emerald-200 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 bg-white overflow-hidden group"
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+          {livestock.map((item) => (
+            <div
+              key={item.key}
+              className="group relative bg-card rounded-2xl border border-border p-6 md:p-8 hover:border-primary/30 hover:shadow-lg transition-all duration-300"
             >
-              {/* Top accent bar */}
-              <div className="h-2 w-full bg-gradient-to-r from-emerald-500 to-emerald-600" />
-
-              <div className="p-8 space-y-6">
-                {/* Header with icon and label */}
-                <div className="flex items-start justify-between">
-                  <h3 className="text-xl font-bold text-slate-900">{stat.label}</h3>
-                  <div className="text-5xl opacity-70 group-hover:scale-125 group-hover:opacity-100 transition-all duration-300">
-                    {stat.icon}
-                  </div>
-                </div>
-
-                {/* Main count - larger and more prominent */}
-                <div className="space-y-2">
-                  <div className="text-6xl font-black text-emerald-700 tracking-tight font-mono">
-                    {isLoading ? "—" : <AnimatedNumber value={stat.value} delay={stat.delay} />}
-                  </div>
-                </div>
-
-                {/* Badge */}
-                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-emerald-700 pt-4 border-t-2 border-emerald-100">
-                  <div className="h-2 w-2 rounded-full bg-emerald-500" />
-                  Best Grade • Premium Quality
+              <div className="space-y-4">
+                <p className="text-sm font-medium text-muted-foreground uppercase tracking-wider">{item.label}</p>
+                <p className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground tabular-nums">
+                  {isLoading ? (
+                    <span className="inline-block h-10 w-28 animate-pulse rounded-lg bg-muted" />
+                  ) : (
+                    <AnimatedNumber value={data?.[item.key] ?? item.fallback} delay={item.delay} />
+                  )}
+                </p>
+                <div className="flex items-center gap-2">
+                  <span className="inline-block h-1.5 w-1.5 rounded-full bg-primary" />
+                  <span className="text-xs font-medium text-muted-foreground">Best Grade / Premium</span>
                 </div>
               </div>
-            </Card>
+              <div className="absolute top-0 right-0 h-24 w-24 bg-primary/[0.03] rounded-bl-[100px] group-hover:bg-primary/[0.06] transition-colors" />
+            </div>
           ))}
         </div>
 
-        {/* Footer note */}
-        <div className="mt-16 pt-12 border-t-2 border-emerald-200 text-center space-y-2">
-          <p className="text-slate-700 font-medium">
-            Verified shipments across Saudi Arabia, UAE, Qatar, Kuwait, Oman & Bahrain.
-          </p>
-          <p className="text-slate-600 text-sm">
-            All livestock meet international health and quality standards. Real-time tracking ensures consistent
-            delivery excellence.
-          </p>
-        </div>
+        <p className="text-center text-sm text-muted-foreground mt-12">
+          Verified shipments across Saudi Arabia, UAE, Qatar, Kuwait, Oman & Bahrain
+        </p>
       </div>
     </section>
   )

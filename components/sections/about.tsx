@@ -1,58 +1,63 @@
-import { CheckCircle2 } from "lucide-react"
 import Image from "next/image"
+
+const highlights = [
+  "Exporting to Saudi Arabia, UAE, Qatar, Kuwait, Oman, Bahrain",
+  "Strong relationships with Somaliland pastoral communities",
+  "Full veterinary inspection and health certification",
+  "Complete compliance with Gulf import regulations",
+]
 
 export function About() {
   return (
-    <section id="about" className="py-20 bg-slate-50">
+    <section id="about" className="py-20 md:py-28 bg-background">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <div className="space-y-8">
-            <div>
-              <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl mb-4">
-                About Qabyo-Tire Trading Company
+            <div className="space-y-4">
+              <p className="text-sm font-semibold uppercase tracking-widest text-primary">About Us</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground text-balance">
+                A Decade of Excellence in Livestock Trading
               </h2>
-              <div className="h-1 w-20 bg-primary rounded-full mb-6"></div>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                Founded in 2015 in Hargeisa, Somaliland, Qabyo-Tire Trading Company has established itself as a premier
-                livestock trading and export firm. We bridge the gap between Somali pastoral communities and
-                international markets in the Gulf region.
+              <p className="text-muted-foreground leading-relaxed">
+                Founded in 2015 in Hargeisa, Somaliland, Qabyo-Tire Trading Company has grown into a premier
+                livestock export firm. We bridge Somali pastoral communities with international markets across the
+                Gulf region, maintaining the highest standards of quality and animal welfare.
               </p>
             </div>
 
-            <div className="grid gap-4">
-              {[
-                "Exporting to Saudi Arabia, UAE, Qatar, Kuwait, Oman, Bahrain",
-                "Strong relationships with pastoral communities",
-                "Expertise in livestock standards & health certification",
-                "Full compliance with Gulf import regulations",
-              ].map((item, i) => (
+            <div className="space-y-3">
+              {highlights.map((item, i) => (
                 <div key={i} className="flex items-start gap-3">
-                  <CheckCircle2 className="h-6 w-6 text-primary shrink-0" />
-                  <span className="text-slate-700">{item}</span>
+                  <div className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/10">
+                    <svg className="h-3 w-3 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                    </svg>
+                  </div>
+                  <span className="text-sm text-foreground">{item}</span>
                 </div>
               ))}
             </div>
 
-            <div className="bg-white p-6 rounded-xl border border-slate-100 shadow-sm">
-              <blockquote className="text-slate-600 italic border-l-4 border-primary pl-4">
-                "Our mission is to deliver excellence in every shipment, ensuring the prosperity of our local
-                communities and the satisfaction of our international partners."
-              </blockquote>
+            <div className="rounded-xl bg-muted/60 p-5 border border-border">
+              <p className="text-sm text-muted-foreground italic leading-relaxed">
+                {'"'}Our mission is to deliver excellence in every shipment, ensuring the prosperity of our local communities
+                and the satisfaction of our international partners.{'"'}
+              </p>
             </div>
           </div>
 
           <div className="relative">
-            <div className="aspect-square rounded-2xl overflow-hidden relative shadow-xl border border-slate-100">
+            <div className="aspect-[4/3] rounded-2xl overflow-hidden relative shadow-xl">
               <Image
                 src="/images/goats-about.jpg"
-                alt="Qabyo-Tire Trading Company Livestock Goats"
+                alt="Premium quality goats by Qabyo-Tire Trading Company"
                 fill
-                className="object-cover w-full h-full"
+                className="object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                <h3 className="text-xl font-bold">Premium Quality Livestock</h3>
-                <p className="opacity-90 text-sm mt-1">Sourced from the best pastoral lands</p>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-6">
+                <p className="text-white font-semibold">Premium Quality Livestock</p>
+                <p className="text-white/70 text-sm mt-0.5">Sourced from the best pastoral lands in Somaliland</p>
               </div>
             </div>
           </div>

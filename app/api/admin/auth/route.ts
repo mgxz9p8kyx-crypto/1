@@ -24,7 +24,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, message: "Invalid credentials" }, { status: 401 })
     }
 
-    const cookieStore = await cookies()
+    const cookieStore = cookies()
     cookieStore.set("admin_token", email, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
@@ -44,7 +44,7 @@ export async function POST(request: Request) {
 
 export async function GET() {
   try {
-    const cookieStore = await cookies()
+    const cookieStore = cookies()
     const token = cookieStore.get("admin_token")
 
     if (!token) {
@@ -59,7 +59,7 @@ export async function GET() {
 
 export async function DELETE() {
   try {
-    const cookieStore = await cookies()
+    const cookieStore = cookies()
     cookieStore.delete("admin_token")
     return NextResponse.json({ success: true, message: "Logged out" })
   } catch (error) {

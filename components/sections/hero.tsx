@@ -1,74 +1,84 @@
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import Image from "next/image"
+import Logo from "@/components/logo"
 
 export function Hero() {
   return (
-    <section id="hero" className="relative overflow-hidden bg-slate-50 py-20 md:py-32 lg:py-40">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 z-0 opacity-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary via-slate-200 to-slate-50" />
-
-      <div className="container relative z-10 mx-auto px-4 md:px-6">
-        <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
-          <div className="flex flex-col gap-6">
-            <div className="inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-sm font-medium text-primary w-fit">
-              <span className="flex h-2 w-2 rounded-full bg-primary mr-2 animate-pulse"></span>
-              Premium Livestock Trading Since 2015
+    <section id="hero" className="relative overflow-hidden bg-background">
+      <div className="container mx-auto px-4 md:px-6 py-16 md:py-24 lg:py-32">
+        <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
+          <div className="flex flex-col gap-8">
+            <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm font-medium text-primary w-fit">
+              <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
+              Established 2015
             </div>
 
-            <h1 className="text-4xl font-extrabold tracking-tight lg:text-6xl xl:text-7xl text-slate-900 leading-[1.1]">
-              Qabyo-Tire <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-600">
-                Trading Company
-              </span>
-            </h1>
-
-            <p className="max-w-[600px] text-lg text-slate-600 md:text-xl font-medium leading-relaxed">
-              Your Trusted Partner for Quality Livestock Exports to the Gulf Region. We ensure the highest standards of
-              health, quality, and reliability.
-            </p>
+            <div className="space-y-4">
+              <h1 className="text-4xl font-bold tracking-tight text-foreground lg:text-5xl xl:text-6xl text-balance leading-[1.1]">
+                Premium Livestock{" "}
+                <span className="text-primary">Exports</span>{" "}
+                to the Gulf Region
+              </h1>
+              <p className="max-w-lg text-lg text-muted-foreground leading-relaxed">
+                Qabyo-Tire Trading Company delivers best-grade cattle, goats, sheep, and camels from Somaliland to
+                markets across Saudi Arabia, UAE, Qatar, Kuwait, Oman, and Bahrain.
+              </p>
+            </div>
 
             <div className="flex flex-col gap-3 sm:flex-row">
-              <Button size="lg" className="bg-primary hover:bg-primary/90 text-white" asChild>
-                <Link href="#contact">
-                  Contact Us
-                  <svg className="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground h-12 px-8 text-base" asChild>
+                <Link href="#contact">Request a Quote</Link>
+              </Button>
+              <Button size="lg" variant="outline" className="h-12 px-8 text-base" asChild>
+                <Link href="#tracker">View Live Tracker</Link>
+              </Button>
+            </div>
+
+            <div className="flex items-center gap-6 pt-4">
+              <div className="flex items-center gap-2">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+                  <svg className="h-5 w-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                </Link>
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-primary text-primary hover:bg-primary/5 bg-transparent"
-                asChild
-              >
-                <Link href="#services">Our Services</Link>
-              </Button>
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-foreground">10+ Years</p>
+                  <p className="text-xs text-muted-foreground">Experience</p>
+                </div>
+              </div>
+              <div className="h-8 w-px bg-border" />
+              <div className="flex items-center gap-2">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+                  <svg className="h-5 w-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
+                  </svg>
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-foreground">6 Countries</p>
+                  <p className="text-xs text-muted-foreground">Gulf Markets</p>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div className="relative mx-auto aspect-video w-full max-w-[500px] lg:max-w-none lg:mr-0 lg:aspect-auto">
-            <div className="absolute inset-0 rounded-2xl overflow-hidden shadow-2xl border border-white/20">
+          <div className="relative">
+            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl">
               <Image
                 src="/images/camels-hero.jpg"
-                alt="Qabyo-Tire Trading Company Livestock Camels"
+                alt="Premium camels for export by Qabyo-Tire Trading Company"
                 fill
-                className="object-cover w-full h-full"
+                className="object-cover"
                 priority
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-            </div>
-
-            {/* Floating stats card - kept from previous design but updated style */}
-            <div className="absolute -bottom-6 -left-6 z-20 bg-white p-4 rounded-xl shadow-xl border border-slate-100 hidden md:block animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-500">
-              <div className="flex items-center gap-4">
-                <div className="bg-primary/10 p-3 rounded-full">
-                  <span className="text-2xl">🌍</span>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-slate-500">Exporting to</p>
-                  <p className="text-lg font-bold text-slate-900">6 Gulf Countries</p>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-6">
+                <div className="flex items-center gap-3">
+                  <Logo className="h-10 w-10 border-2 border-white/30" />
+                  <div>
+                    <p className="text-white font-semibold text-sm">Qabyo-Tire Trading Company</p>
+                    <p className="text-white/70 text-xs">Connecting Lands, Delivering Excellence</p>
+                  </div>
                 </div>
               </div>
             </div>
