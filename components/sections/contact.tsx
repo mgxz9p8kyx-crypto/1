@@ -26,6 +26,7 @@ const gulfCountries = ["Saudi Arabia", "United Arab Emirates", "Qatar", "Kuwait"
 export function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -34,15 +35,22 @@ export function Contact() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true)
+    setError(null)
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
       })
-      if (res.ok) { setIsSuccess(true); form.reset() }
+      if (res.ok) {
+        setIsSuccess(true)
+        form.reset()
+      } else {
+        setError("Failed to send message. Please try again.")
+      }
     } catch (err) {
       console.error("Error submitting form", err)
+      setError("Network error. Please check your connection and try again.")
     } finally {
       setIsSubmitting(false)
     }
@@ -110,6 +118,15 @@ export function Contact() {
                 <h3 className="text-xl font-bold text-foreground">Message Sent</h3>
                 <p className="text-muted-foreground text-sm">Thank you for contacting us. We will respond shortly.</p>
                 <Button variant="outline" size="sm" onClick={() => setIsSuccess(false)}>Send Another</Button>
+              </div>
+            ) : error ? (
+              <div className="flex flex-col items-center justify-center text-center space-y-4 py-12">
+                <div className="h-14 w-14 bg-destructive/10 text-destructive rounded-full flex items-center justify-center">
+                  <Send className="h-6 w-6" />
+                </div>
+                <h3 className="text-xl font-bold text-foreground">Error</h3>
+                <p className="text-muted-foreground text-sm">{error}</p>
+                <Button variant="outline" size="sm" onClick={() => setError(null)}>Try Again</Button>
               </div>
             ) : (
               <Form {...form}>
