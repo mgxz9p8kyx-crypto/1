@@ -32,7 +32,7 @@ const livestock = [
 ]
 
 export function Tracker() {
-  const { data, isLoading } = useSWR<Stats>("/api/stats", fetcher, { refreshInterval: 15000 })
+  const { data, isLoading, error } = useSWR<Stats>("/api/stats", fetcher, { refreshInterval: 15000 })
 
   return (
     <section id="tracker" className="py-20 md:py-28 bg-muted/50">
@@ -45,12 +45,22 @@ export function Tracker() {
           <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             Real-time tracking of our livestock exports demonstrating our consistent delivery across Gulf markets since 2015.
           </p>
-          <div className="inline-flex items-center gap-2 text-sm font-medium text-primary bg-primary/5 border border-primary/15 rounded-full px-4 py-2">
+          <div className={`inline-flex items-center gap-2 text-sm font-medium rounded-full px-4 py-2 ${
+            error
+              ? "text-destructive bg-destructive/5 border border-destructive/15"
+              : "text-primary bg-primary/5 border border-primary/15"
+          }`}>
             <span className="relative flex h-2.5 w-2.5">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary/60" />
-              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-primary" />
+              {error ? (
+                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-destructive" />
+              ) : (
+                <>
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary/60" />
+                  <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-primary" />
+                </>
+              )}
             </span>
-            System Online
+            {error ? "System Offline - Using Cached Data" : "System Online"}
           </div>
         </div>
 
