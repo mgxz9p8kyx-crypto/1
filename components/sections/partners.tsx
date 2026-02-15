@@ -11,23 +11,21 @@ const markets = [
 
 export function Partners() {
   return (
-    <section className="py-8 md:py-10 border-b border-border bg-muted/30 overflow-hidden">
+    <section className="py-8 md:py-10 border-b border-border bg-muted/30">
       <div className="container mx-auto px-4 md:px-6 mb-6">
         <p className="text-center text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
           Trusted Export Markets
         </p>
       </div>
-      <div className="relative w-full overflow-hidden">
-        <div className="flex animate-scroll gap-2">
-          {[...markets, ...markets, ...markets].map((m, i) => (
-            <div key={`${m.name}-${i}`} className="flex flex-shrink-0 items-center gap-2.5 px-6 md:px-10">
-              <span className="text-3xl md:text-4xl leading-none" role="img" aria-label={`${m.name} flag`}>
-                {m.flag}
-              </span>
-              <span className="text-sm font-medium text-foreground whitespace-nowrap">{m.name}</span>
-            </div>
-          ))}
-        </div>
+      <div className="flex items-center justify-center gap-4 md:gap-8 px-4 md:px-6 flex-wrap">
+        {markets.map((m) => (
+          <div key={m.name} className="flex flex-col sm:flex-row items-center gap-2 whitespace-nowrap">
+            <span className="text-4xl md:text-5xl font-system emoji-rendering">
+              {m.flag}
+            </span>
+            <span className="text-xs md:text-sm font-medium text-foreground">{m.name}</span>
+          </div>
+        ))}
       </div>
     </section>
   )
