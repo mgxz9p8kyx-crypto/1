@@ -14,11 +14,6 @@ const galleryImages = [
     alt: "Best quality goats sourced from Somaliland rangelands",
     caption: "Best Grade Goats",
   },
-  {
-    src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_4700-6JP1ElZKN9vAIwzcGSTub15tLQYqxu.jpeg",
-    alt: "Qabyo-Tire Trading Company official branding and partnership certification",
-    caption: "Official Company Branding",
-  },
 ]
 
 export function Gallery() {
