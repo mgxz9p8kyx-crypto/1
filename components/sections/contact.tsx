@@ -21,7 +21,15 @@ const formSchema = z.object({
   message: z.string().min(10, "Message must be at least 10 characters"),
 })
 
-const gulfCountries = ["Saudi Arabia", "United Arab Emirates", "Qatar", "Kuwait", "Oman", "Bahrain", "Other"]
+const gulfCountries = [
+  { name: "Saudi Arabia", flag: "🇸🇦" },
+  { name: "United Arab Emirates", flag: "🇦🇪" },
+  { name: "Qatar", flag: "🇶🇦" },
+  { name: "Kuwait", flag: "🇰🇼" },
+  { name: "Oman", flag: "🇴🇲" },
+  { name: "Bahrain", flag: "🇧🇭" },
+  { name: "Other", flag: "🌍" },
+]
 
 export function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -173,7 +181,7 @@ export function Contact() {
                           </FormControl>
                           <SelectContent>
                             {gulfCountries.map((c) => (
-                              <SelectItem key={c} value={c}>{c}</SelectItem>
+                              <SelectItem key={c.name} value={c.name}>{c.flag} {c.name}</SelectItem>
                             ))}
                           </SelectContent>
                         </Select>
