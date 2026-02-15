@@ -22,8 +22,8 @@ export default function Home() {
         <Tracker />
         <About />
         <Services />
-        <Gallery />
         <WhyChooseUs />
+        <Gallery />
         <Testimonials />
         <FAQ />
         <Contact />
