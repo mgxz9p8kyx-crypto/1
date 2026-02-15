@@ -3,9 +3,9 @@ import { NextResponse } from "next/server"
 export async function POST(request: Request) {
   try {
     const body = await request.json()
-    const { name, email, phone, message } = body
+    const { fullName, email, phone, company, country, message } = body
 
-    if (!name || !email || !message) {
+    if (!fullName || !email || !message) {
       return NextResponse.json({ success: false, message: "Missing required fields" }, { status: 400 })
     }
 
@@ -16,7 +16,7 @@ export async function POST(request: Request) {
     if (!sgApiKey) {
       console.error("[v0] SendGrid API key not configured")
       // Fallback: log to console for development
-      console.log("Contact form submission:", { name, email, phone, message })
+      console.log("Contact form submission:", { fullName, email, phone, company, country, message })
       return NextResponse.json({
         success: true,
         message: "Message logged (SendGrid not configured). You will receive a response shortly.",
@@ -29,7 +29,7 @@ export async function POST(request: Request) {
       personalizations: [
         {
           to: [{ email: contactEmail }],
-          subject: `New Contact Form Submission from ${name}`,
+          subject: `New Contact Form Submission from ${fullName}`,
         },
       ],
       from: { email: fromEmail },
@@ -38,9 +38,11 @@ export async function POST(request: Request) {
           type: "text/html",
           value: `
             <h2>New Contact Form Submission</h2>
-            <p><strong>Name:</strong> ${escapeHtml(name)}</p>
+            <p><strong>Name:</strong> ${escapeHtml(fullName)}</p>
             <p><strong>Email:</strong> ${escapeHtml(email)}</p>
             <p><strong>Phone:</strong> ${escapeHtml(phone || "Not provided")}</p>
+            <p><strong>Company:</strong> ${escapeHtml(company || "Not provided")}</p>
+            <p><strong>Country:</strong> ${escapeHtml(country || "Not provided")}</p>
             <p><strong>Message:</strong></p>
             <p>${escapeHtml(message).replace(/\n/g, "<br>")}</p>
           `,
