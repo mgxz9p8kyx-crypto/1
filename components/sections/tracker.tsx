@@ -125,7 +125,7 @@ export function Tracker() {
           <div className="text-center md:text-left">
             <p className="text-base font-semibold text-foreground">Verified Across 6 Gulf Nations</p>
             <p className="text-sm text-muted-foreground mt-0.5">
-              Every shipment to Saudi Arabia, UAE, Qatar, Kuwait, Oman, and Bahrain meets strict health and quality certifications.
+              Every shipment to Saudi Arabia, United Arab Emirates, Qatar, Kuwait, Oman, and Bahrain meets strict health and quality certifications.
             </p>
           </div>
         </div>

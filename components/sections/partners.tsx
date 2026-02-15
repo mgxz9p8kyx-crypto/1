@@ -1,14 +1,12 @@
 "use client"
 
 const markets = [
-  { name: "Saudi Arabia", flag: "\u{1F1F8}\u{1F1E6}" },
-  { name: "UAE", flag: "\u{1F1E6}\u{1F1EA}" },
-  { name: "Qatar", flag: "\u{1F1F6}\u{1F1E6}" },
-  { name: "Kuwait", flag: "\u{1F1F0}\u{1F1FC}" },
-  { name: "Oman", flag: "\u{1F1F4}\u{1F1F2}" },
-  { name: "Bahrain", flag: "\u{1F1E7}\u{1F1ED}" },
-  { name: "Egypt", flag: "\u{1F1EA}\u{1F1EC}" },
-  { name: "Djibouti", flag: "\u{1F1E9}\u{1F1EF}" },
+  { name: "Saudi Arabia", flag: "🇸🇦" },
+  { name: "United Arab Emirates", flag: "🇦🇪" },
+  { name: "Qatar", flag: "🇶🇦" },
+  { name: "Kuwait", flag: "🇰🇼" },
+  { name: "Oman", flag: "🇴🇲" },
+  { name: "Bahrain", flag: "🇧🇭" },
 ]
 
 export function Partners() {
