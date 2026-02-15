@@ -38,11 +38,61 @@ FROM_EMAIL=noreply@qabyotire.com
 CONTACT_EMAIL=qabyotire99@gmail.com
 \`\`\`
 
-To get a SendGrid API key:
-1. Sign up at https://sendgrid.com (free tier available)
-2. Go to Settings → API Keys
-3. Create a new API key with Mail Send access
-4. Copy the key to `SENDGRID_API_KEY`
+To configure SendGrid correctly:
+
+**Step 1: Create a SendGrid Account**
+1. Sign up at https://sendgrid.com (free tier available - 100 emails/day)
+2. Complete email verification
+3. Go to your dashboard
+
+**Step 2: Create an API Key**
+1. In SendGrid dashboard, click your profile name (top right) → "Account"
+2. Navigate to "Settings" → "API Keys"
+3. Click "Create API Key"
+4. Name it "Qabyo Tire" or similar
+5. Select "Restricted Access"
+6. Under "Mail Send", enable "Mail Send" permission
+7. Click "Create & View"
+8. Copy the full API key (starts with `SG.`) and save it securely
+
+**Step 3: Verify Sender Domain (Recommended)**
+1. In SendGrid dashboard, go to "Settings" → "Sender Authentication"
+2. Choose "Verify a Domain"
+3. Enter domain: `qabyotire.com` (or your domain)
+4. Add the DNS records to your domain registrar
+5. Once verified, you can use any email like `noreply@qabyotire.com`
+
+**Alternative: Verify Single Sender**
+If domain verification is too complex:
+1. Go to "Settings" → "Sender Authentication"  
+2. Click "Verify a Single Sender"
+3. Use your business email (qabyotire99@gmail.com)
+4. Click the verification link sent to that email
+5. Update \`FROM_EMAIL\` to use the verified sender email
+
+**Step 4: Configure Environment Variables on Vercel**
+1. Go to https://vercel.com/dashboard
+2. Select your project
+3. Go to "Settings" → "Environment Variables"
+4. Add these three variables:
+   - \`SENDGRID_API_KEY\`: Your API key (SG....)
+   - \`FROM_EMAIL\`: noreply@qabyotire.com (or verified email)
+   - \`CONTACT_EMAIL\`: qabyotire99@gmail.com
+5. Make sure they're available in "Production" environment
+6. Click "Save"
+
+**Step 5: Test the Setup**
+1. Redeploy your Vercel project (or wait for auto-deploy)
+2. Go to your website's contact form
+3. Submit a test message
+4. Check the contact email for the submission
+5. Check SendGrid dashboard under "Activity" → "Email" to see delivery status
+
+**Troubleshooting:**
+- **"Failed to send email"**: Check that SENDGRID_API_KEY is correct and not expired
+- **Emails not received**: Verify FROM_EMAIL is verified in SendGrid
+- **Emails going to spam**: Add SPF and DKIM records (done during domain verification)
+- **SendGrid free tier limit**: Limited to 100 emails/day. Upgrade for unlimited
 
 ## Deployment Steps
 
