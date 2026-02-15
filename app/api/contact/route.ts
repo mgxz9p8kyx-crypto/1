@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { addSubmission } from "@/lib/submissions-store"
 
 export async function POST(request: Request) {
   try {
@@ -9,6 +10,16 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, message: "Missing required fields" }, { status: 400 })
     }
 
+    // Save to admin submissions store
+    const submission = addSubmission({
+      name: fullName,
+      email,
+      phone,
+      company,
+      country,
+      message,
+    })
+
     const sgApiKey = process.env.SENDGRID_API_KEY
     const fromEmail = process.env.FROM_EMAIL || "noreply@qabyotire.com"
     const contactEmail = process.env.CONTACT_EMAIL || "qabyotire99@gmail.com"
@@ -16,11 +27,12 @@ export async function POST(request: Request) {
     if (!sgApiKey) {
       console.error("[v0] SendGrid API key not configured")
       // Fallback: log to console for development
-      console.log("Contact form submission:", { fullName, email, phone, company, country, message })
+      console.log("Contact form submission saved:", { id: submission.id, name: fullName, email, phone, company, country, message })
       return NextResponse.json({
         success: true,
-        message: "Message logged (SendGrid not configured). You will receive a response shortly.",
+        message: "Message saved and logged (SendGrid not configured). You will receive a response shortly.",
         isDev: true,
+        submissionId: submission.id,
       })
     }
 
@@ -75,6 +87,7 @@ export async function POST(request: Request) {
     return NextResponse.json({
       success: true,
       message: "Your message has been sent successfully. We will contact you soon!",
+      submissionId: submission.id,
     })
   } catch (error) {
     console.error("[v0] Contact API error:", error)

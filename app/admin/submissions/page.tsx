@@ -10,6 +10,8 @@ interface ContactSubmission {
   name: string
   email: string
   phone?: string
+  company?: string
+  country?: string
   message: string
   submittedAt: string
   status: "new" | "read" | "responded"
@@ -202,6 +204,20 @@ export default function SubmissionsPage() {
                       <a href={`tel:${selectedSubmission.phone}`} className="text-emerald-600 hover:underline">
                         {selectedSubmission.phone}
                       </a>
+                    </div>
+                  )}
+
+                  {selectedSubmission.company && (
+                    <div>
+                      <label className="text-xs font-semibold text-emerald-700 uppercase">Company</label>
+                      <p className="text-emerald-900">{selectedSubmission.company}</p>
+                    </div>
+                  )}
+
+                  {selectedSubmission.country && (
+                    <div>
+                      <label className="text-xs font-semibold text-emerald-700 uppercase">Country</label>
+                      <p className="text-emerald-900">{selectedSubmission.country}</p>
                     </div>
                   )}
 

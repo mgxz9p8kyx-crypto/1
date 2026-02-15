@@ -1,27 +1,5 @@
 import { NextResponse } from "next/server"
-
-interface StoredSubmission {
-  id: string
-  name: string
-  email: string
-  phone?: string
-  message: string
-  submittedAt: string
-  status: "new" | "read" | "responded"
-}
-
-// In-memory storage (replace with database in production)
-let submissions: StoredSubmission[] = [
-  {
-    id: "1",
-    name: "Ahmed Hassan",
-    email: "ahmed@example.com",
-    phone: "+252 123 456 789",
-    message: "Interested in bulk cattle export to UAE",
-    submittedAt: new Date(Date.now() - 86400000).toISOString(),
-    status: "read",
-  },
-]
+import { getSubmissions, addSubmission, updateSubmissionStatus as updateStatus, deleteSubmission } from "@/lib/submissions-store"
 
 async function checkAuth(request: Request) {
   const cookieHeader = request.headers.get("cookie")
@@ -35,7 +13,7 @@ export async function GET(request: Request) {
 
   return NextResponse.json({
     success: true,
-    submissions: submissions.sort((a, b) => new Date(b.submittedAt).getTime() - new Date(a.submittedAt).getTime()),
+    submissions: getSubmissions(),
   })
 }
 
@@ -46,19 +24,16 @@ export async function POST(request: Request) {
 
   try {
     const body = await request.json()
-    const { name, email, phone, message } = body
+    const { name, email, phone, company, country, message } = body
 
-    const submission: StoredSubmission = {
-      id: Date.now().toString(),
+    const submission = addSubmission({
       name,
       email,
       phone,
+      company,
+      country,
       message,
-      submittedAt: new Date().toISOString(),
-      status: "new",
-    }
-
-    submissions.push(submission)
+    })
 
     return NextResponse.json({ success: true, submission })
   } catch (error) {
@@ -76,12 +51,11 @@ export async function PATCH(request: Request) {
     const body = await request.json()
     const { id, status } = body
 
-    const submission = submissions.find((s) => s.id === id)
+    const submission = updateStatus(id, status)
     if (!submission) {
       return NextResponse.json({ success: false, message: "Submission not found" }, { status: 404 })
     }
 
-    submission.status = status
     return NextResponse.json({ success: true, submission })
   } catch (error) {
     console.error("[v0] Update error:", error)
@@ -98,7 +72,11 @@ export async function DELETE(request: Request) {
     const body = await request.json()
     const { id } = body
 
-    submissions = submissions.filter((s) => s.id !== id)
+    const deleted = deleteSubmission(id)
+    if (!deleted) {
+      return NextResponse.json({ success: false, message: "Submission not found" }, { status: 404 })
+    }
+
     return NextResponse.json({ success: true, message: "Submission deleted" })
   } catch (error) {
     console.error("[v0] Delete error:", error)
