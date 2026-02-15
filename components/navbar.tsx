@@ -38,7 +38,7 @@ export function Navbar() {
           <Logo className="h-14 w-14" />
           <div className="flex flex-col">
             <span className="text-base font-bold text-foreground tracking-tight leading-tight">QABYO-TIRE</span>
-            <span className="text-[11px] font-medium text-muted-foreground tracking-wider uppercase">Trading Company</span>
+            <span className="text-[11px] font-medium text-emerald-600 tracking-wider uppercase">Connecting Lands, Delivering Excellence</span>
           </div>
         </Link>
 
