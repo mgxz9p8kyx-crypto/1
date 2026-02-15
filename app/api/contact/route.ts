@@ -61,7 +61,14 @@ export async function POST(request: Request) {
 
     if (!sendGridResponse.ok) {
       const error = await sendGridResponse.text()
-      console.error("[v0] SendGrid error:", error)
+      console.error("[v0] SendGrid error:", {
+        status: sendGridResponse.status,
+        statusText: sendGridResponse.statusText,
+        error: error,
+        apiKeyExists: !!sgApiKey,
+        apiKeyPrefix: sgApiKey?.substring(0, 3),
+        fromEmail: fromEmail,
+      })
       return NextResponse.json({ success: false, message: "Failed to send email" }, { status: 500 })
     }
 
