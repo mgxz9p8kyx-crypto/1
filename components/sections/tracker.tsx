@@ -60,7 +60,7 @@ const livestock = [
 ]
 
 export function Tracker() {
-  const { data, isLoading } = useSWR<Stats>("/api/stats", fetcher, { refreshInterval: 15000 })
+  const { data, isLoading, error } = useSWR<Stats>("/api/stats", fetcher, { refreshInterval: 15000 })
 
   return (
     <section id="livestock" className="py-20 md:py-28 bg-muted/50">
@@ -73,6 +73,23 @@ export function Tracker() {
           <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             Every animal is carefully sourced, health-certified, and delivered with the highest standards of care -- building trust with Gulf buyers since 2015.
           </p>
+          <div className={`inline-flex items-center gap-2 text-sm font-medium rounded-full px-4 py-2 ${
+            error
+              ? "text-destructive bg-destructive/5 border border-destructive/15"
+              : "text-primary bg-primary/5 border border-primary/15"
+          }`}>
+            <span className="relative flex h-2.5 w-2.5">
+              {error ? (
+                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-destructive" />
+              ) : (
+                <>
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary/60" />
+                  <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-primary" />
+                </>
+              )}
+            </span>
+            {error ? "System Offline - Using Cached Data" : "System Online"}
+          </div>
         </div>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
